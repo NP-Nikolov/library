@@ -1,8 +1,10 @@
-package com.tinqin.academy.models;
+package com.tinqin.academy.persistence.models;
 
+import com.tinqin.academy.persistence.enums.BookStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -10,7 +12,6 @@ import java.util.UUID;
 @Builder
 @ToString
 @Getter
-@Setter
 @Entity
 @Table(name = "books")
 public class Book {
@@ -23,11 +24,26 @@ public class Book {
     private String title;
 
     @Column(name = "author",nullable = false)
-    private String author;
+    private UUID author;
+
+    @Column(name = "pages", nullable = false)
+    private String pages;
+
+    @Column(name = "price", nullable = false)
+    private Double price;
+
+    @Column(name = "stock",nullable = false)
+    private Integer stock;
+
+    @Column(name = "createdAd",nullable = false)
+    private LocalDateTime createdAd;
+
+    @Column(name = "isDeleted")
+    private Boolean isDeleted;
 
     @Column(name = "book_status",nullable = false)
     @Enumerated(EnumType.STRING)
-    private String bookStatus;
+    private BookStatus bookStatus;
 
     /*
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
