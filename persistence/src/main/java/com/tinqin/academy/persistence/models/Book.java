@@ -3,49 +3,65 @@ package com.tinqin.academy.persistence.models;
 import com.tinqin.academy.persistence.enums.BookStatus;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @ToString
 @Getter
 @Entity
 @Table(name = "books")
 public class Book {
+
+    @Builder
+    public Book(String title, Author author, String pages, BigDecimal price) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.price = price;
+        this.stock = 0;
+        this.isDeleted = false;
+        this.bookStatus = BookStatus.PUBLISHED;
+        //this.id = UUID.randomUUID();
+
+    }
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id", nullable = false)
     private UUID id;
 
     @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name = "author",nullable = false)
-    private UUID author;
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Author author;
 
     @Column(name = "pages", nullable = false)
     private String pages;
 
     @Column(name = "price", nullable = false)
-    private Double price;
+    private BigDecimal price;
 
-    @Column(name = "stock",nullable = false)
+    @Column(name = "stock", nullable = false)
     private Integer stock;
 
-    @Column(name = "createdAd",nullable = false)
+    @CreationTimestamp
+    @Column(name = "createdAd", nullable = false)
     private LocalDateTime createdAd;
 
     @Column(name = "isDeleted")
     private Boolean isDeleted;
 
-    @Column(name = "book_status",nullable = false)
+    @Column(name = "book_status", nullable = false)
     @Enumerated(EnumType.STRING)
     private BookStatus bookStatus;
-
     /*
+
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
     List<BookRental> rentals;
 
@@ -62,7 +78,6 @@ public class Book {
     private List<Category> categories;
 
      */
-
 
 
 }

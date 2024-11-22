@@ -1,6 +1,9 @@
 package com.tinqin.academy.rest.controllers;
 
 import com.tinqin.academy.api.APIRoutes;
+import com.tinqin.academy.api.book.create.CreateBook;
+import com.tinqin.academy.api.book.create.CreateBookInput;
+import com.tinqin.academy.api.book.create.CreateBookOutput;
 import com.tinqin.academy.api.operations.getbook.GetBook;
 import com.tinqin.academy.api.operations.getbook.GetBookInput;
 import com.tinqin.academy.api.operations.getbook.GetBookOutput;
@@ -22,6 +25,7 @@ public class BookController {
     private final GetBook getBook;
     private final QueryDemo queryDemo;
     private final PostDemo postDemo;
+    private final CreateBook createBook;
 
     @GetMapping(APIRoutes.GET_BOOK)
     public ResponseEntity<?> getBook(@PathVariable("bookId") String bookId) {
@@ -59,6 +63,12 @@ public class BookController {
         return ResponseEntity.ok(postDemoInput);
     }
 
+    @PostMapping(APIRoutes.API_BOOK)
+    public ResponseEntity<?> createBook(@RequestBody CreateBookInput input) {
+        CreateBookOutput result = createBook.process(input);
+
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
+    }
 
 
 }
