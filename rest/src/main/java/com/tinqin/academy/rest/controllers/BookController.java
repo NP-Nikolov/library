@@ -13,6 +13,7 @@ import com.tinqin.academy.api.postdemo.PostDemoResult;
 import com.tinqin.academy.api.querydemo.QueryDemo;
 import com.tinqin.academy.api.querydemo.QueryDemoInput;
 
+import com.tinqin.academy.api.querydemo.QueryDemoResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,9 +51,9 @@ public class BookController {
                 .queryParam(queryParam2)
                 .build();
 
-        queryDemo.process(build);
+        QueryDemoResult queryDemoResult = queryDemo.process(build);
 
-        return ResponseEntity.ok(queryDemo.process(build));
+        return ResponseEntity.ok(queryDemoResult);
     }
 
     @PostMapping("/my-post-demo")
