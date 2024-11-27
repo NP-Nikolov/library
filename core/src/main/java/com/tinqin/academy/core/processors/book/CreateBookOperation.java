@@ -3,6 +3,7 @@ package com.tinqin.academy.core.processors.book;
 import com.tinqin.academy.api.book.create.CreateBook;
 import com.tinqin.academy.api.book.create.CreateBookInput;
 import com.tinqin.academy.api.book.create.CreateBookOutput;
+import com.tinqin.academy.core.exceptions.BusinessException;
 import com.tinqin.academy.persistence.models.Author;
 import com.tinqin.academy.persistence.models.Book;
 import com.tinqin.academy.persistence.repositories.AuthorRepository;
@@ -25,7 +26,7 @@ public class CreateBookOperation implements CreateBook {
 
         Author author = authorRepository
                 .findById(UUID.fromString(input.getAuthor()))
-                .orElseThrow(() -> new IllegalArgumentException("Author not found"));
+                .orElseThrow(() -> new BusinessException("Author not found"));
 
         Book book = Book
                 .builder()
