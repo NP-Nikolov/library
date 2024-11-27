@@ -14,6 +14,7 @@ import com.tinqin.academy.api.querydemo.QueryDemo;
 import com.tinqin.academy.api.querydemo.QueryDemoInput;
 
 import com.tinqin.academy.api.querydemo.QueryDemoResult;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -65,7 +66,7 @@ public class BookController {
     }
 
     @PostMapping(APIRoutes.API_BOOK)
-    public ResponseEntity<?> createBook(@RequestBody CreateBookInput input) {
+    public ResponseEntity<?> createBook(@Valid @RequestBody CreateBookInput input) {
         CreateBookOutput result = createBook.process(input);
 
         return new ResponseEntity<>(result, HttpStatus.CREATED);
