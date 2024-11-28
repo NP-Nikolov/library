@@ -7,7 +7,6 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.3.5</version>
-        <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
     <groupId>com.tinqin.academy</groupId>
@@ -18,10 +17,7 @@
     <properties>
         <java.version>21</java.version>
         <revision>0.0.1-SNAPSHOT</revision>
-        <jackson.version>2.16.0</jackson.version>
-        <flatten-pom.version>1.2.7</flatten-pom.version>
         <swagger.version>2.6.0</swagger.version>
-        <spring-starter.version>3.3.5</spring-starter.version>
     </properties>
 
     <modules>
@@ -40,18 +36,26 @@
         </dependency>
 
         <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-            <version>${swagger.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
+
+        <dependency>
+            <groupId>io.vavr</groupId>
+            <artifactId>vavr</artifactId>
+            <version>0.10.4</version>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>${swagger.version}</version>
         </dependency>
 
         <dependency>
@@ -61,28 +65,52 @@
         </dependency>
 
     </dependencies>
+
+    <!--    <build>-->
+    <!--        <plugins>-->
+    <!--            <plugin>-->
+    <!--                <groupId>org.codehaus.mojo</groupId>-->
+    <!--                <artifactId>flatten-maven-plugin</artifactId>-->
+    <!--                <version>1.2.7</version>-->
+    <!--                <configuration>-->
+    <!--                </configuration>-->
+    <!--                <executions>-->
+    <!--                    <execution>-->
+    <!--                        <id>flatten</id>-->
+    <!--                        <phase>process-resources</phase>-->
+    <!--                        <goals>-->
+    <!--                            <goal>flatten</goal>-->
+    <!--                        </goals>-->
+    <!--                    </execution>-->
+    <!--                    <execution>-->
+    <!--                        <id>flatten.clean</id>-->
+    <!--                        <phase>clean</phase>-->
+    <!--                        <goals>-->
+    <!--                            <goal>clean</goal>-->
+    <!--                        </goals>-->
+    <!--                    </execution>-->
+    <!--                </executions>-->
+    <!--            </plugin>-->
+    <!--        </plugins>-->
+    <!--    </build>-->
+
     <build>
         <plugins>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>flatten-maven-plugin</artifactId>
-                <version>1.2.7</version>
-                <configuration>
-                </configuration>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>3.0.0</version>
                 <executions>
                     <execution>
-                        <id>flatten</id>
-                        <phase>process-resources</phase>
+                        <id>enforce</id>
                         <goals>
-                            <goal>flatten</goal>
+                            <goal>enforce</goal>
                         </goals>
-                    </execution>
-                    <execution>
-                        <id>flatten.clean</id>
-                        <phase>clean</phase>
-                        <goals>
-                            <goal>clean</goal>
-                        </goals>
+                        <configuration>
+                            <rules>
+                                <dependencyConvergence/>
+                            </rules>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
