@@ -3,6 +3,7 @@ package com.tinqin.academy.rest.controllers;
 import com.tinqin.academy.api.author.create.CreateAuthor;
 import com.tinqin.academy.api.author.create.CreateAuthorInput;
 import com.tinqin.academy.api.author.create.CreateAuthorOutput;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ public class AuthorsController {
     private final CreateAuthor createAuthor;
 
     @PostMapping(API_AUTHOR)
-    public ResponseEntity<?> createAuthor(@RequestBody CreateAuthorInput input) {
+    public ResponseEntity<?> createAuthor(@Valid @RequestBody CreateAuthorInput input) {
         CreateAuthorOutput result = createAuthor.process(input);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }

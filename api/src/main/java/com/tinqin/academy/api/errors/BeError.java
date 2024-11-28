@@ -7,11 +7,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 
-@Getter
+@Getter // - moje da se mahne - zaradi metodite na interfejsa ne e nujen
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class BeError implements OperationError{
+public class BeError implements OperationError {
 
     private HttpStatus status;
     private String errorCode;
@@ -19,22 +19,22 @@ public class BeError implements OperationError{
     private MessageLevel messageLevel;
 
     @Override
-    public HttpStatus getStatus(){
+    public HttpStatus getStatus() {
         return status;
     }
 
     @Override
-    public String getErrorCode(){
+    public String getErrorCode() {
         return errorCode;
     }
 
     @Override
-    public String getMessage(){
+    public String getMessage() {
         return message;
     }
 
     @Override
-    public MessageLevel getMessageLevel(){
+    public MessageLevel getMessageLevel() {
         return messageLevel;
     }
 }
