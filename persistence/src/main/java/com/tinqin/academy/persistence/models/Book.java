@@ -25,6 +25,7 @@ public class Book {
         this.price = price;
         this.stock = 0;
         this.isDeleted = false;
+        this.createdAd = LocalDateTime.now();
         this.bookStatus = BookStatus.PUBLISHED;
         //this.id = UUID.randomUUID();
 
@@ -51,10 +52,10 @@ public class Book {
     private Integer stock;
 
     @CreationTimestamp
-    @Column(name = "createdAd", nullable = false)
+    @Column(name = "created_ad", nullable = false)
     private LocalDateTime createdAd;
 
-    @Column(name = "isDeleted")
+    @Column(name = "is_deleted")
     private Boolean isDeleted;
 
     @Column(name = "book_status", nullable = false)
