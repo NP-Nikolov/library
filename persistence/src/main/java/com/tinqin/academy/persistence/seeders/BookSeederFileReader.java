@@ -50,7 +50,7 @@ public class BookSeederFileReader implements ApplicationRunner {
 
         PreparedStatement ps = connection.prepareStatement(BOOKS_QUERY);
 
-        FileReader fileReader = FileReader.loadFile("books.csv", 2);
+        FileReader fileReader = FileReader.loadFile("subfolder\\books.csv", 2);
 
         List<BookModel> batch = fileReader.getBatch();
 
