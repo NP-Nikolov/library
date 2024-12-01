@@ -1,4 +1,4 @@
-package com.tinqin.academy.api.operations.getbook;
+package com.tinqin.academy.api.book.getbook;
 
 import com.tinqin.academy.api.base.ProcessorResult;
 import lombok.AllArgsConstructor;

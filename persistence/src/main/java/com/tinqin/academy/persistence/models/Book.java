@@ -13,17 +13,18 @@ import java.util.UUID;
 @NoArgsConstructor
 @ToString
 @Getter
+@Setter
 @Entity
 @Table(name = "books")
 public class Book {
 
     @Builder
-    public Book(String title, Author author, String pages, BigDecimal price) {
+    public Book(String title, Author author, String pages, BigDecimal price, Integer stock) {
         this.title = title;
         this.author = author;
         this.pages = pages;
         this.price = price;
-        this.stock = 0;
+        this.stock = stock;
         this.isDeleted = false;
         this.createdAd = LocalDateTime.now();
         this.bookStatus = BookStatus.PUBLISHED;

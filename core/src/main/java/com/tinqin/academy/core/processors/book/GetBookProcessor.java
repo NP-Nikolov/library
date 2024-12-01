@@ -1,10 +1,11 @@
-package com.tinqin.academy.core.processors;
+package com.tinqin.academy.core.processors.book;
 
 import com.tinqin.academy.api.errors.OperationError;
-import com.tinqin.academy.api.operations.getbook.GetBook;
-import com.tinqin.academy.api.operations.getbook.GetBookInput;
-import com.tinqin.academy.api.operations.getbook.GetBookOutput;
+import com.tinqin.academy.api.book.getbook.GetBook;
+import com.tinqin.academy.api.book.getbook.GetBookInput;
+import com.tinqin.academy.api.book.getbook.GetBookOutput;
 import com.tinqin.academy.core.errorhandler.base.ErrorHandler;
+import com.tinqin.academy.core.exceptions.BusinessException;
 import com.tinqin.academy.persistence.models.Book;
 import com.tinqin.academy.persistence.repositories.BookRepository;
 import io.vavr.control.Either;
@@ -33,7 +34,7 @@ public class GetBookProcessor implements GetBook {
 
     private Try<Book> fetchBook(GetBookInput input) {
         return Try.of(() -> bookRepository.findById(UUID.fromString(input.getBookId()))
-                .orElseThrow(() -> new RuntimeException(BOOK_NOT_FOUND)));
+                .orElseThrow(() -> new BusinessException(BOOK_NOT_FOUND)));
 
     }
 
