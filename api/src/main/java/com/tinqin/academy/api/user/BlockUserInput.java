@@ -1,4 +1,4 @@
-package com.tinqin.academy.api.operations.getbook;
+package com.tinqin.academy.api.user;
 
 import com.tinqin.academy.api.base.ProcessorInput;
 import jakarta.validation.constraints.NotBlank;
@@ -8,15 +8,15 @@ import lombok.Getter;
 import lombok.ToString;
 import org.hibernate.validator.constraints.UUID;
 
-import static com.tinqin.academy.api.ValidationMessages.CLIENT_ID_CANNOT_BE_NULL;
+import static com.tinqin.academy.api.ValidationMessages.USER_ID_CANNOT_BE_NULL;
 
 @Getter
 @Builder
 @AllArgsConstructor
 @ToString
-public class GetBookInput implements ProcessorInput {
-    @UUID
-    @NotBlank(message = CLIENT_ID_CANNOT_BE_NULL)
-    private String bookId;
+public class BlockUserInput implements ProcessorInput {
 
+    @UUID
+    @NotBlank(message = USER_ID_CANNOT_BE_NULL)
+    private String id;
 }
