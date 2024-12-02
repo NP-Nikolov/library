@@ -1,6 +1,7 @@
 package com.tinqin.academy.persistence.filereader;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.io.ClassPathResource;
 
 import java.io.BufferedReader;
@@ -49,7 +50,9 @@ public class FileReader {
     private String readLine(Integer index) {
         try {
             return reader.readLine();
+            //throw new IOException("Unexpected end of file");
         } catch (IOException e) {
+            log.warn("Line read error: " + e.getMessage());
             return "";
         }
     }
@@ -58,7 +61,9 @@ public class FileReader {
         if (line == null || line.isBlank()) {
             return Optional.empty();
         }
-        String[] parts = line.split(",\\s*");
+        String sep = ",";
+        int count = StringUtils.countMatches(line, sep);
+        String[] parts = line.split(",\\s*", ++count);
 
         if (parts.length != 5) {
             log.warn("Invalid line format: " + line);
