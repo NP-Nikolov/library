@@ -1,7 +1,8 @@
 package com.tinqin.academy.persistence.seeders;
 
-import com.tinqin.academy.persistence.filereader.BookModel;
-import com.tinqin.academy.persistence.filereader.FileReader;
+import com.tinqin.academy.persistence.filereaderfactory.FileReaderFactory;
+import com.tinqin.academy.persistence.filereaderfactory.models.BookModel;
+import com.tinqin.academy.persistence.filereaderfactory.base.FileReader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
@@ -50,7 +51,9 @@ public class BookSeederFileReader implements ApplicationRunner {
 
         PreparedStatement ps = connection.prepareStatement(BOOKS_QUERY);
 
-        FileReader fileReader = FileReader.loadFile("books.csv", 2);
+        //FileReader fileReader = FileReader.loadFile("books.csv", 2);
+        //FileReader fileReader = FileReaderFactory.createCsvFileReader("books.csv", 2);
+        FileReader fileReader = FileReaderFactory.createJsonFileReader("books.json", 2);
 
         List<BookModel> batch = fileReader.getBatch();
 
@@ -66,7 +69,7 @@ public class BookSeederFileReader implements ApplicationRunner {
                 ps.clearParameters();
             }
 
-            //ps.executeBatch();
+            ps.executeBatch();
             batch = fileReader.getBatch();
         }
     }
