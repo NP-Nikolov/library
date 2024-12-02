@@ -66,7 +66,7 @@ public class BookSeederFileReader implements ApplicationRunner {
                 ps.clearParameters();
             }
 
-            ps.executeBatch();
+            //ps.executeBatch();
             batch = fileReader.getBatch();
         }
     }
