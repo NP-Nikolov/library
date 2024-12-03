@@ -41,7 +41,10 @@ public class JsonFileReader implements FileReader {
 
         try {
             while ((jsonParser.currentToken() == JsonToken.START_OBJECT || jsonParser.nextToken() != JsonToken.END_ARRAY) && batch.size() < batchSize) {
-                if (jsonParser.currentToken() == null) break;
+                if (jsonParser.currentToken() == null) {
+                    break;
+                }
+
                 if (jsonParser.currentToken() == JsonToken.START_OBJECT) {
                     Optional<BookModel> book = parseObject();
                     book.ifPresent(batch::add);
