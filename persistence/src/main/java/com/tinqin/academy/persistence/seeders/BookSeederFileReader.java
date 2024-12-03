@@ -15,9 +15,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.util.List;
 
-@Component
+//@Component
 @RequiredArgsConstructor
-@Order(4)
+//@Order(4)
 public class BookSeederFileReader implements ApplicationRunner {
 
     @Value("${spring.datasource.url}")

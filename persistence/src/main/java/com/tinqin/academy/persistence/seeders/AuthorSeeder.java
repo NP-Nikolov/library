@@ -10,9 +10,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Component
+//@Component
 @RequiredArgsConstructor
-@Order(1)
+//@Order(1)
 public class AuthorSeeder implements ApplicationRunner {
 
     private final JdbcTemplate jdbcTemplate;
@@ -28,7 +28,7 @@ public class AuthorSeeder implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        /*
+
         String names = authors
                 .stream()
                 .map(author -> author.split(" "))
@@ -38,6 +38,6 @@ public class AuthorSeeder implements ApplicationRunner {
         String query = INSERT_AUTHOR_QUERY_TEMPLATE + names;
 
         jdbcTemplate.execute(query);
-         */
+
     }
 }
