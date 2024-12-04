@@ -12,7 +12,7 @@ public class InternalErrorHandlerComponent extends BaseErrorHandlerComponent {
         return BeError
                 .builder()
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .errorCode("IE-001")
+                .errorCode("IE-900")
                 .message(throwable.getMessage())
                 .build();
     }
