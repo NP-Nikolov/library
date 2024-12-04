@@ -15,6 +15,7 @@ import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.List;
 
 @Component
@@ -81,6 +82,19 @@ public class BookSeeder implements ApplicationRunner {
     public void run(ApplicationArguments args) throws Exception {
 
         Connection connection = DriverManager.getConnection(jdbcUrl, postgresUsername, postgresPassword);
+
+        /*
+        ResultSet resultSet = connection
+                .prepareStatement("SELECT COUNT(*) FROM authors")
+                .executeQuery();
+
+        resultSet.next();
+        Integer bookCount = resultSet.getInt(1);
+
+        if (bookCount > 0) {
+            return;
+        }
+         */
 
         PreparedStatement ps = connection.prepareStatement(BOOKS_QUERY);
 

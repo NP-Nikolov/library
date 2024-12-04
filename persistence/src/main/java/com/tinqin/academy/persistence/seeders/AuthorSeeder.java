@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 //@Order(1)
 public class AuthorSeeder implements ApplicationRunner {
-
     private final JdbcTemplate jdbcTemplate;
 
     private final String INSERT_AUTHOR_QUERY_TEMPLATE = """
@@ -23,11 +22,18 @@ public class AuthorSeeder implements ApplicationRunner {
 
     private final List<String> authors = List.of(
             "Ivan Vazov",
-            "Hristo Botev"
-    );
+            "Hristo Botev");
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
+
+        /*
+        Integer authorCount = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM authors", Integer.class);
+
+        if (authorCount > 0) {
+            return;
+        }
+         */
 
         String names = authors
                 .stream()
@@ -38,6 +44,5 @@ public class AuthorSeeder implements ApplicationRunner {
         String query = INSERT_AUTHOR_QUERY_TEMPLATE + names;
 
         jdbcTemplate.execute(query);
-
     }
 }
