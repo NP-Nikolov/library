@@ -1,6 +1,8 @@
 package com.tinqin.academy.api.book.getbook;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tinqin.academy.api.base.ProcessorInput;
+import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,6 +21,8 @@ public class GetBookInput implements ProcessorInput {
     @NotBlank(message = CLIENT_ID_CANNOT_BE_NULL)
     private String bookId;
 
+    //@JsonIgnore
+    //@Hidden
     private String locale;
 
 }
