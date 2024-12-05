@@ -19,4 +19,6 @@ public class GetBookInput implements ProcessorInput {
     @NotBlank(message = CLIENT_ID_CANNOT_BE_NULL)
     private String bookId;
 
+    private String locale;
+
 }
