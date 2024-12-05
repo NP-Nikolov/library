@@ -39,32 +39,36 @@ public class BookSeeder implements ApplicationRunner {
         private final String title;
         private final String pages;
         private final BigDecimal price;
+        private final BigDecimal pricePerRental;
         private final String authorFirstName;
         private final String authorLastName;
     }
 
     private final List<BookTemplete> books = List.of(
             BookTemplete.builder()
-                    .title("Pod Igoto")
+                    .title("Pod Igoto1a")
                     .pages("300")
-                    .price(BigDecimal.valueOf(2.5))
+                    .price(BigDecimal.valueOf(25.9))
+                    .pricePerRental(BigDecimal.valueOf(2.5))
                     .authorFirstName("Ivan")
                     .authorLastName("Vazov")
                     .build(),
             BookTemplete.builder()
-                    .title("Elegiya")
+                    .title("Elegiya1a")
                     .pages("200")
-                    .price(BigDecimal.valueOf(2))
+                    .price(BigDecimal.valueOf(22.22))
+                    .pricePerRental(BigDecimal.valueOf(2))
                     .authorFirstName("Hristo")
                     .authorLastName("Botev")
                     .build()
     );
 
     String BOOKS_QUERY = """
-            INSERT INTO books (id, created_ad, is_deleted, pages, price, stock, title, book_status, author_id)
+            INSERT INTO books (id, created_ad, is_deleted, pages, price, price_per_rental, stock, title, book_status, author_id)
             VALUES (gen_random_uuid(),
                     now(),
                     false,
+                    ?,
                     ?,
                     ?,
                     0,
@@ -74,7 +78,7 @@ public class BookSeeder implements ApplicationRunner {
                      FROM authors
                      WHERE first_name = ?
                         AND last_name = ?
-                        AND id = '2332e457-a831-4626-9b17-b48740104761'))
+                        AND id = '0790db67-24dd-4ba9-8768-78bc143a76d6'))
             """;
     // - vtorata liniq se zaredi s avtor null - zaradi idto
 
@@ -101,14 +105,15 @@ public class BookSeeder implements ApplicationRunner {
         for (BookTemplete book : books) {
             ps.setString(1, book.getPages());
             ps.setBigDecimal(2, book.getPrice());
-            ps.setString(3, book.getTitle());
-            ps.setString(4, book.getAuthorFirstName());
-            ps.setString(5, book.getAuthorLastName());
+            ps.setBigDecimal(3, book.getPricePerRental());
+            ps.setString(4, book.getTitle());
+            ps.setString(5, book.getAuthorFirstName());
+            ps.setString(6, book.getAuthorLastName());
 
             ps.addBatch();
             ps.clearParameters();
         }
 
-        //ps.executeBatch();    za da ne updeitvam
+        //ps.executeBatch();    //za da ne updeitvam
     }
 }

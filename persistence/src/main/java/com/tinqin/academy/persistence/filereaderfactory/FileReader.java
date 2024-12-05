@@ -66,7 +66,7 @@ public class FileReader {
         int count = StringUtils.countMatches(line, sep);
         String[] parts = line.split(",\\s*", ++count);
 
-        if (parts.length != 5) {
+        if (parts.length != 6) {
             log.warn("Invalid line format: " + line);
             return Optional.empty();
         }
@@ -76,8 +76,9 @@ public class FileReader {
                 .title(parts[0])
                 .pages(parts[1])
                 .price(BigDecimal.valueOf(Double.parseDouble(parts[2])))
-                .authorFirstName(parts[3])
-                .authorLastName(parts[4])
+                .pricePerRental(BigDecimal.valueOf(Double.parseDouble(parts[3])))
+                .authorFirstName(parts[4])
+                .authorLastName(parts[5])
                 .build()
         );
     }

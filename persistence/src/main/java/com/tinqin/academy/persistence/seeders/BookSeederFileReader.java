@@ -3,6 +3,7 @@ package com.tinqin.academy.persistence.seeders;
 import com.tinqin.academy.persistence.filereaderfactory.FileReaderFactory;
 import com.tinqin.academy.persistence.filereaderfactory.models.BookModel;
 import com.tinqin.academy.persistence.filereaderfactory.base.FileReader;
+//import com.tinqin.academy.persistence.filereaderfactory.FileReader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
@@ -30,10 +31,11 @@ public class BookSeederFileReader implements ApplicationRunner {
     private String postgresPassword;
 
     String BOOKS_QUERY = """
-            INSERT INTO books (id, created_ad, is_deleted, pages, price, stock, title, book_status, author_id)
+            INSERT INTO books (id, created_ad, is_deleted, pages, price, price_per_rental, stock, title, book_status, author_id)
             VALUES (gen_random_uuid(),
                     now(),
                     false,
+                    ?,
                     ?,
                     ?,
                     0,
@@ -51,7 +53,7 @@ public class BookSeederFileReader implements ApplicationRunner {
 
         PreparedStatement ps = connection.prepareStatement(BOOKS_QUERY);
 
-        //FileReader fileReader = FileReader.loadFile("books.csv", 2);
+        //FileReader fileReader = FileReader.loadFile("books.csv", 2); - vij comentiraniq import
         //FileReader fileReader = FileReaderFactory.createCsvFileReader("books.csv", 2);
         FileReader fileReader = FileReaderFactory.createJsonFileReader("books.json", 2);
 
@@ -61,9 +63,10 @@ public class BookSeederFileReader implements ApplicationRunner {
             for (BookModel book : batch) {
                 ps.setString(1, book.getPages());
                 ps.setBigDecimal(2, book.getPrice());
-                ps.setString(3, book.getTitle());
-                ps.setString(4, book.getAuthorFirstName());
-                ps.setString(5, book.getAuthorLastName());
+                ps.setBigDecimal(3, book.getPricePerRental());
+                ps.setString(4, book.getTitle());
+                ps.setString(5, book.getAuthorFirstName());
+                ps.setString(6, book.getAuthorLastName());
 
                 ps.addBatch();
                 ps.clearParameters();

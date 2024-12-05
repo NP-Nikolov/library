@@ -4,6 +4,7 @@ import com.tinqin.academy.persistence.enums.BookStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -19,11 +20,12 @@ import java.util.UUID;
 public class Book {
 
     @Builder
-    public Book(String title, Author author, String pages, BigDecimal price, Integer stock) {
+    public Book(String title, Author author, String pages, BigDecimal price, BigDecimal pricePerRental, Integer stock) {
         this.title = title;
         this.author = author;
         this.pages = pages;
         this.price = price;
+        this.pricePerRental = pricePerRental;
         this.stock = stock;
         this.isDeleted = false;
         this.createdAd = LocalDateTime.now();
@@ -49,12 +51,19 @@ public class Book {
     @Column(name = "price", nullable = false)
     private BigDecimal price;
 
+    @Column(name = "price_per_rental", nullable = false)
+    private BigDecimal pricePerRental;
+
     @Column(name = "stock", nullable = false)
     private Integer stock;
 
     @CreationTimestamp
     @Column(name = "created_ad", nullable = false)
     private LocalDateTime createdAd;
+
+    @UpdateTimestamp
+    @Column(name = "updated_on")
+    private LocalDateTime updatedAd;
 
     @Column(name = "is_deleted")
     private Boolean isDeleted;

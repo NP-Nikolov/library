@@ -28,4 +28,8 @@ public class CreateBookInput implements ProcessorInput {
     @Length(max = 100)
     private String price;
 
+    @NotBlank
+    @Length(max = 40)
+    private String pricePerRental;
+
 }

@@ -50,6 +50,7 @@ public class CreateBookOperation implements CreateBook {
                 .author(author)
                 .pages(input.getPages())
                 .price(BigDecimal.valueOf(Double.parseDouble(input.getPrice())))
+                .pricePerRental(BigDecimal.valueOf(Double.parseDouble(input.getPricePerRental())))
                 .stock(0) // Book(String title, Author author, String pages, BigDecimal price, Integer stock)
                 .build());
     }

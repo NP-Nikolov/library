@@ -67,6 +67,7 @@ public class JsonFileReader implements FileReader {
                     case "title" -> builder.title(jsonParser.getText());
                     case "pages" -> builder.pages(jsonParser.getText());
                     case "price" -> builder.price(jsonParser.getDecimalValue());
+                    case "pricePerRental" -> builder.pricePerRental(jsonParser.getDecimalValue());
                     case "authorFirstName" -> builder.authorFirstName(jsonParser.getText());
                     case "authorLastName" -> builder.authorLastName(jsonParser.getText());
                     default -> jsonParser.skipChildren();
