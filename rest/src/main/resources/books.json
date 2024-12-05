@@ -1,22 +1,25 @@
 [
   {
-    "title": "Pod igoto 191",
+    "title": "Pod igoto 192",
     "pages": 300,
     "price": 16.90,
+    "pricePerRental": 2.80,
     "authorFirstName": "Ivan",
     "authorLastName": "Vazov"
   },
   {
-    "title": "Chichovtsi 811",
+    "title": "Chichovtsi 812",
     "pages": 300,
     "price": 15.00,
+    "pricePerRental": 2.90,
     "authorFirstName": "Ivan",
     "authorLastName": "Vazov"
   },
   {
-    "title": "Nora 921",
+    "title": "Nora 922",
     "pages": 150,
     "price": 12.50,
+    "pricePerRental": 3.80,
     "authorFirstName": "Ivan",
     "authorLastName": "Vazov"
   }
