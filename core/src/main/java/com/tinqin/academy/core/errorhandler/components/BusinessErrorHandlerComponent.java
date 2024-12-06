@@ -8,11 +8,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 @Component
-public class BusinessErrorHandlerComponent extends BaseErrorHandlerComponent{
+public class BusinessErrorHandlerComponent extends BaseErrorHandlerComponent {
 
     @Override
     public OperationError handle(Throwable throwable) {
-        if(throwable instanceof BusinessException exception){
+        if (throwable instanceof BusinessException exception) {
             return BeError
                     .builder()
                     .status(HttpStatus.BAD_REQUEST)

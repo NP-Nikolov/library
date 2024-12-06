@@ -1,7 +1,5 @@
 package com.tinqin.academy.core.processors.book;
 
-import static com.tinqin.academy.api.ValidationMessages.AUTHOR_NOT_FOUND;
-
 import com.tinqin.academy.api.book.create.CreateBook;
 import com.tinqin.academy.api.book.create.CreateBookInput;
 import com.tinqin.academy.api.book.create.CreateBookOutput;
@@ -10,8 +8,10 @@ import com.tinqin.academy.core.errorhandler.base.ErrorHandler;
 import com.tinqin.academy.core.exceptions.BusinessException;
 import com.tinqin.academy.persistence.models.Author;
 import com.tinqin.academy.persistence.models.Book;
+import com.tinqin.academy.persistence.models.User;
 import com.tinqin.academy.persistence.repositories.AuthorRepository;
 import com.tinqin.academy.persistence.repositories.BookRepository;
+import com.tinqin.academy.persistence.repositories.UserRepository;
 import io.vavr.control.Either;
 import io.vavr.control.Try;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,10 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 //import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.UUID;
+
+import static com.tinqin.academy.api.ValidationMessages.*;
 
 @Service
 @RequiredArgsConstructor
@@ -28,13 +31,18 @@ public class CreateBookOperation implements CreateBook {
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
     private final ErrorHandler errorHandler;
+    private final UserRepository userRepository;
 
     @Override
     public Either<OperationError, CreateBookOutput> process(CreateBookInput input) {
-        return getAuthor(input)
-                .flatMap(author -> createBook(input, author))
-                .flatMap(this::saveBook)
-                .toEither()
+
+        return Try.of(() -> {
+                            validateAdmin(UUID.fromString(input.getUserId()));
+                            return getAuthor(input)
+                                    .flatMap(author -> createBook(input, author))
+                                    .flatMap(this::saveBook).get();
+                        }
+                ).toEither()
                 .mapLeft(errorHandler::handle);
     }
 
@@ -42,6 +50,23 @@ public class CreateBookOperation implements CreateBook {
         return Try.of(() -> UUID.fromString(input.getAuthor()))
                 .flatMap(authorId -> Try.of(() -> authorRepository.findById(authorId)
                         .orElseThrow(() -> new BusinessException(AUTHOR_NOT_FOUND))));
+    }
+
+    private Try<?> getAdmin(CreateBookInput input) {
+        return Try.of(() -> UUID.fromString(input.getUserId()))
+                .flatMap(userId -> Try.of(() -> userRepository.findById(userId)
+                        .filter(u -> u.isAdmin())
+                        .orElseThrow(() -> new BusinessException(ADMIN_NOT_FOUND))));
+    }
+
+    private void validateAdmin(UUID adminId) {
+        Optional<User> user = userRepository.findById(adminId);
+        if (!user.isPresent()) {
+            throw new BusinessException(USER_IS_NOT_FOUND);
+        }
+        if (!user.get().isAdmin()) {
+            throw new BusinessException(USER_IS_NOT_ADMIN);
+        }
     }
 
     private Try<Book> createBook(CreateBookInput input, Author author) {
