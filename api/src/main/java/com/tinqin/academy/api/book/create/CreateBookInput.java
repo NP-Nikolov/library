@@ -32,4 +32,7 @@ public class CreateBookInput implements ProcessorInput {
     @Length(max = 40)
     private String pricePerRental;
 
+    @UUID
+    private String userId;
+
 }
