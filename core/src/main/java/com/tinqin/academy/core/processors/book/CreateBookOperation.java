@@ -52,16 +52,9 @@ public class CreateBookOperation implements CreateBook {
                         .orElseThrow(() -> new BusinessException(AUTHOR_NOT_FOUND))));
     }
 
-    private Try<?> getAdmin(CreateBookInput input) {
-        return Try.of(() -> UUID.fromString(input.getUserId()))
-                .flatMap(userId -> Try.of(() -> userRepository.findById(userId)
-                        .filter(u -> u.isAdmin())
-                        .orElseThrow(() -> new BusinessException(ADMIN_NOT_FOUND))));
-    }
-
     private void validateAdmin(UUID adminId) {
         Optional<User> user = userRepository.findById(adminId);
-        if (!user.isPresent()) {
+        if (user.isEmpty()) {
             throw new BusinessException(USER_IS_NOT_FOUND);
         }
         if (!user.get().isAdmin()) {
