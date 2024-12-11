@@ -18,6 +18,7 @@
         <java.version>21</java.version>
         <revision>0.0.1-SNAPSHOT</revision>
         <swagger.version>2.6.0</swagger.version>
+        <reporting.revision>0.0.1-SNAPSHOT</reporting.revision>
     </properties>
 
     <modules>
