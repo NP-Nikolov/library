@@ -15,13 +15,13 @@ public class InterceptorConfiguration implements WebMvcConfigurer {
 
     @Bean
     @Scope(scopeName = "request", proxyMode = ScopedProxyMode.TARGET_CLASS)
-    public LocaleHeader localeHeader() {
+    public LocaleHeader getLocaleHeader() {
         return new LocaleHeader();
     }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new LoggingInterceptor());
-        registry.addInterceptor(new LocaleInterceptor(localeHeader()));
+        registry.addInterceptor(new LocaleInterceptor(getLocaleHeader()));
     }
 }
