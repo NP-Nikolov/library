@@ -21,8 +21,10 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeRequests(customizer -> customizer
+
                         .requestMatchers(whitelistedEndpoints).permitAll()
                         .anyRequest().authenticated())
+                //.anyRequest().permitAll())
                 .formLogin(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
