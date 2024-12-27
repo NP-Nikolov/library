@@ -12,6 +12,7 @@ import com.tinqin.academy.api.book.getbooksbyauthor.GetBookByAuthorInput;
 import com.tinqin.academy.api.book.getbooksbyauthor.GetBookByAuthorOutput;
 import com.tinqin.academy.api.errors.OperationError;
 import com.tinqin.academy.rest.models.LocaleHeader;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.vavr.control.Either;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,10 +20,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
+@SecurityRequirement(name = "Bearer Authentication")
 public class BookController extends BaseController {
 
     private final GetBook getBook;
@@ -30,6 +33,7 @@ public class BookController extends BaseController {
     private final GetBookByAuthor getBookByAuthor;
     private final LocaleHeader localeHeader;
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(APIRoutes.GET_BOOK)
     public ResponseEntity<?> getBook(@PathVariable("bookId") String bookId) {
         //@RequestHeader(value = "locale", required = false, defaultValue = "en") String locale) {
