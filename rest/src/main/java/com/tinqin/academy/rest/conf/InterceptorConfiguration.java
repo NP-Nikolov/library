@@ -24,4 +24,6 @@ public class InterceptorConfiguration implements WebMvcConfigurer {
         registry.addInterceptor(new LoggingInterceptor());
         registry.addInterceptor(new LocaleInterceptor(getLocaleHeader()));
     }
+
+    //test line
 }
